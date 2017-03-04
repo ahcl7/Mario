@@ -6,9 +6,26 @@ var MARIO;
 var first,last;
 var trai = 0;
 var list_obj = new Array(0);
+var mark = new Array(3);
+for(var i in mark) mark[i] = false;
 function convert(x) {
 	return 800-x;
 } 
+function inside(x1,y1,x,y) {
+	return (x>=x1 && x<=x1+100 && y>=y1 && y<=y1+100);
+}
+function touch_up(x1,y1,x,y) {
+	return inside(x1,y1,x,y+100) || inside(x1,y1,x+100,y+100);
+}
+// function touch_down(A,B) {
+// 	return touch_up(B,A);
+// }
+// function touch_left(A,B) {
+
+// }
+// function touch_rifht(A,B) {
+// 	return touch_left(B,A)
+// }
 function add(i) {
 	new_ob = document.createElement('img');
 	new_ob.id = "id" + list_obj[i].id + "";
@@ -54,7 +71,7 @@ function process() {
 			}
 		}	
 	}
-	alert(list_obj.length + " " + cnt);
+	// alert(list_obj.length + " " + cnt);
 	last--;
 	first = 0;
 	var new_ob;
@@ -76,7 +93,18 @@ function process() {
 function dead() {
 	return false;
 }
+function Move_on_keyboard() {
+	if (mark[0]) MARIO.move_left();
+	if (mark[1] && MARIO.stand()) MARIO.move_up();
+	if (mark[2]) MARIO.move_right();		
+}
 function move_all() {
+	Move_on_keyboard();
+	// if(MARIO.touch_head()) alert("asdf");
+	if (MARIO.touch_head() || !MARIO.stand()) {
+		MARIO.roi();
+	} 
+	MARIO.quantinh();
 	// for(var i = first; i < last ; i++) {
 	// 	if (list_obj[i] instanceof Dynamic) list_obj[i].move();
 	// }
@@ -94,10 +122,13 @@ function move_all() {
 	// for(var i=0;i<list_obj)
 }
 function move_left_all() {
-	trai += 5;
+	trai += 10;
 	// for(var i = first; i < last ; i++) {
 	// 	list_obj[i].show(trai);
 	// }
+	for(var i = first; i < last ;i++) {
+		list_obj[i].show(trai);
+	}
 	while (list_obj.length >0 && list_obj[0].x - trai <= -100) {
 		list_obj.splice(0,1);
 		last--;
@@ -106,9 +137,7 @@ function move_left_all() {
 		add(last);
 		last++;
 	}
-	for(var i = first; i < last ;i++) {
-		list_obj[i].show(trai);
-	}
+	
 	// for(i in list_obj) {
 	// 	list_obj[i].show();
 	// }
@@ -116,12 +145,12 @@ function move_left_all() {
 async function play() {
 	while (!dead()) {
 		move_all();
-		document.getElementById('test').innerHTML = MARIO.x + "";	
+		// document.getElementById('test').innerHTML = MARIO.x + "";	
 		if (MARIO.x > 500) {
 			MARIO.x = 500;
 			move_left_all();
 		} 
-		await sleep(0);
+		await sleep(10);
 	}
 }
 function readBlob() {
@@ -148,27 +177,58 @@ readBlob();
 function loadmap() {
   pro();
 }
+
 document.onkeydown = function(e) {
 	switch (e.keyCode) {
-		case 37: {
-			// MARIO.x--;
-			MARIO.move_left();
-			// MARIO.move();
-			break;
-		}
-		case 38: {
-			MARIO.move_up();
+		case 65: {
+			mark[0] = true;
 			// MARIO.x--;
 			// MARIO.move();
 			break;
 		}
-		case 39: {
-			MARIO.move_right();
+		case 87: {
+			mark[1] = true;
+			// MARIO.x--;
+			// MARIO.move();
 			break;
 		}
-		case 40: {
-			MARIO.move_down();
+		case 68: {
+			mark[2] = true;
 			break;
 		}
+		// case 40 : {
+		// 	MARIO.move_down();
+		// 	break;
+		// }
+	}
+}
+document.onkeyup = function(e) {
+	switch (e.keyCode) {
+		case 65: {
+			// MARIO.x--;
+			mark[0]  = false;
+
+			// MARIO.move_left();
+			// MARIO.move();
+			break;
+		}
+		case 87: {
+			// alert("up up");	
+			mark[1] = false;
+			// if (MARIO.stand()) MARIO.move_up();
+			// MARIO.x--;
+			// MARIO.move();
+			break;
+		}
+		case 68: {
+			mark[2] = false;
+
+			// MARIO.move_right();		
+			break;
+		}
+		// case 40 : {
+		// 	MARIO.move_down();
+		// 	break;
+		// }
 	}
 }
