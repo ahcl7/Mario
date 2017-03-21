@@ -12,7 +12,6 @@ function convert(x) {
 	return 850-x;
 } 
 function inside(x1,y1,x,y) {
-	// alert("asdf");				
 	return (x>=x1 && x<x1+50 && y>=y1 && y<y1+50);
 }
 function touch_up(x1,y1,x,y) {
@@ -23,15 +22,10 @@ function touch(A,B) {
 	return inside(B.x,B.y,A.x,A.y) || inside(B.x,B.y,A.x+49.999999,A.y) 
 		|| inside(B.x,B.y,A.x,A.y+49.999999) || inside(B.x,B.y,A.x+49.999999,A.y+49.999999);  
 }
-// function touch_down(A,B) {
-// 	return touch_up(B,A);
-// }
-// function touch_left(A,B) {
-
-// }
-// function touch_rifht(A,B) {
-// 	return touch_left(B,A)
-// }
+function touch1(A,B) {		
+	return inside(B.x-trai,B.y,A.x,A.y) || inside(B.x-trai,B.y,A.x+49.999999,A.y) 
+		|| inside(B.x-trai,B.y,A.x,A.y+49.999999) || inside(B.x-trai,B.y,A.x+49.999999,A.y+49.999999);  
+}
 function add(i) {
 	new_ob = document.createElement('img');
 	new_ob.id = "id" + list_obj[i].id + "";
@@ -55,7 +49,6 @@ function add(i) {
 		new_ob.src = "images/pipe1.png";
 		new_ob.style.height = '100px';	
 	}
-	// else (list_obj[i] instanceof grump) new_ob.src = "grump.png";
 	document.getElementById('game').appendChild(new_ob);	 
 }
 function process() {
@@ -64,7 +57,6 @@ function process() {
 	var m = map[0].length;
 	m--;n--;
 	var cnt = 0;		
-	// alert(n + " " + m);
 	for(var j=0; j < m; j++) {
 		for(var i = 0; i < n; i++)  {
 			if (map[i][j]!='_') {
@@ -104,11 +96,9 @@ function process() {
 			}
 		}	
 	}
-	// alert(list_obj.length + " " + cnt);
 	last--;
 	first = 0;
 	var new_ob;
-	// alert(list_obj[0] instanceof Static);
 	for(var i = first ; i < last ; i++) {
 		add(i); 
 	}
@@ -119,7 +109,7 @@ function process() {
 		new_ob.style.height = '50px';
 		new_ob.style.left = MARIO.x + "px";
 		new_ob.style.bottom  = MARIO.y + "px";
-		new_ob.src = "mario1_squat.png		";
+		new_ob.src = "mario1_squat.png";
 		document.getElementById('game').appendChild(new_ob);	
 }
 	
@@ -172,38 +162,16 @@ function Move_on_keyboard() {
 }
 function move_all() {
 	Move_on_keyboard();
-	// if(MARIO.touch_head()) alert("asdf");
 	MARIO.move();
 	for(var j=first;j<last;j++) {
 		if (list_obj[j] instanceof Dynamic) {
 			list_obj[j].move();
 		}
 	}
-		touch_proc();	
-	// for(var j=first;j<last;j++) {
-	// 	if (list_obj[j] instanceof Dynamic) list_obj[j].show(trai);
-	// }
-	// for(var i = first; i < last ; i++) {
-	// 	if (list_obj[i] instanceof Dynamic) list_obj[i].move();
-	// }
-	// while (list_obj.length >0 && list_obj[0].x <= -50) {
-	// 	list_obj.splice(0,1);
-	// 	last--;
-	// }
-	// while (last+1<list_obj.length && list_obj[last+1].x < 1900) {
-	// 	last++;
-	// }
-	// for(var i = first; i < last ;i++) {
-	// 	list_obj[i].show();
-	// }
-	// for(var i=first)
-	// for(var i=0;i<list_obj)
+	touch_proc();			
 }
 function move_left_all() {
 	trai += 5;
-	// for(var i = first; i < last ; i++) {
-	// 	list_obj[i].show(trai);
-	// }
 	for(var i = first; i < last ;i++) {
 		list_obj[i].show(trai);
 	}
@@ -220,14 +188,10 @@ function move_left_all() {
 		last++;
 	}
 	
-	// for(i in list_obj) {
-	// 	list_obj[i].show();
-	// }
 }
 async function play() {
-	while (!dead()) {
+	while (!MARIO.dead()) {
 		move_all();
-		// document.getElementById('test').innerHTML = MARIO.x + "";	
 		if (MARIO.x > 800) {
 			MARIO.x = 800;
 			move_left_all();
@@ -264,53 +228,32 @@ document.onkeydown = function(e) {
 	switch (e.keyCode) {
 		case 65: {
 			mark[0] = true;
-			// MARIO.x--;
-			// MARIO.move();
 			break;
 		}
 		case 87: {
 			mark[1] = true;
-			// MARIO.x--;
-			// MARIO.move();
 			break;
 		}
 		case 68: {
 			mark[2] = true;
 			break;
 		}
-		// case 40 : {
-		// 	MARIO.move_down();
-		// 	break;
-		// }
 	}
 }
 document.onkeyup = function(e) {
 	switch (e.keyCode) {
 		case 65: {
-			// MARIO.x--;
 			mark[0]  = false;
-
-			// MARIO.move_left();
-			// MARIO.move();
 			break;
 		}
 		case 87: {
-			// alert("up up");	
 			mark[1] = false;
-			// if (MARIO.stand()) MARIO.move_up();
-			// MARIO.x--;
-			// MARIO.move();
 			break;
 		}
 		case 68: {
 			mark[2] = false;
 
-			// MARIO.move_right();		
 			break;
 		}
-		// case 40 : {
-		// 	MARIO.move_down();
-		// 	break;
-		// }
 	}
 }

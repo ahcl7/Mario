@@ -3,33 +3,55 @@ class Mario extends Dynamic {
 	constructor(x,y,dirx,diry,vx,vy,id) {
 		super(x,y,dirx,diry,vx,vy,id);
 	}
-	// dead() {
-	// 	for(var i=first;i<last;i++) {
-	// 		// if (Math.abs(this.y - list_obj[i].y - 50) <=14	) 
-	// 		{
-	// 			if (touch_up(this.x,this.y,list_obj[i].x-trai,list_obj[i].y) 
-	// 				&& !(Math.abs(this.x - list_obj[i].x + trai)==50 && this.y == list_obj[i].y))
-	// 			{
-	// 				if (list_obj[i] instanceof Static) {
-	// 					this.y = list_obj[i].y + 50;
-	// 					return true;
-	// 				}
-	// 				else if (list_obj[i] instanceof grump) {
-	// 					this.move_up(10);
-	// 					list_obj[i].disappear();	
-	// 					list_obj.splice(i,1);
-	// 					last--;
-	// 					return true;
-	// 				} else if (list_obj[i] instanceof Koopa) {
-	// 					this.move_up(10);
-	// 					list_obj[i].changeStatus();
-
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	return false;		
+	// touch_left(obj) {
+	// 	if (inside())
 	// }
+
+	// touch_right(obj) {
+		
+	// }
+
+	standToDynamicObject() {
+		for(var i=first;i<last;i++) {
+			if (list_obj[i] instanceof grump || list_obj[i] instanceof Koopa)
+			{
+				if (touch_up(this.x,this.y,list_obj[i].x-trai,list_obj[i].y) 
+					&& !(Math.abs(this.x - list_obj[i].x + trai)==50 && this.y == list_obj[i].y))
+				{
+					return true;	
+				}
+			}
+		}
+		return false;
+	}
+	
+	dead() {
+		if (this.standToDynamicObject()) return false;
+
+		for(var i=first;i<last;i++) {
+			// if (Math.abs(this.y - list_obj[i].y - 50) <=14	) 
+			if (list_obj[i] instanceof grump || list_obj[i] instanceof plant) {
+				// if (this.touch_left(list_obj[i]) || this.touch_right(list_obj[i])) {
+				// 	return true;
+				// }
+				if (touch1(this,list_obj[i])) return true;
+			}
+			else if (list_obj[i] instanceof Koopa && touch1(this,list_obj[i])) {
+				
+				if (list_obj[i].st !=0 ) return true;
+				else {
+					list_obj[i].disappear();
+					list_obj.splice(i,1);
+					last--;
+					return;
+				}
+			}
+			// else if (list_obj[i] instanceof plant) {
+			// 	if (touch(this,list_obj[i])) return true;
+			// }
+		}
+		return false;		
+	}
 	show() {
 
 		if (this.vx == 	0) {
