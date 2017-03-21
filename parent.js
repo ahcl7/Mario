@@ -16,8 +16,11 @@ class parent {
 		this_ob.style.bottom = this.y + "px";
 		this_ob.style.left = (this.x - trai) + "px";
 	}
+<<<<<<< HEAD
 	disappear() {
 		var ob = document.getElementById('id' + this.id);
 		ob.style.visibility = "hidden";
 	}	
+=======
+>>>>>>> 49de9737a313564a3fd08ee98ba3959a9192bdc2
 }
