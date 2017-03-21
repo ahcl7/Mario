@@ -1,0 +1,14 @@
+
+#pic1 {
+	width: 600px;
+	height: 600px;
+}
+#pic {
+	width: 500px;
+	height: 500px;
+}
+#game {
+	width: 1900px;
+	height: 800px;	
+	overflow: hidden;	
+}
