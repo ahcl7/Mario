@@ -6,7 +6,6 @@ class Dynamic extends parent {
 		this.vx = vx;
 		this.vy = vy;
 	}	
-<<<<<<< HEAD
 	roi() {
 		this.vy -= 0.8;
 		this.y += this.vy;
@@ -41,12 +40,3 @@ class Dynamic extends parent {
 		return true;	
 	}
 }
-=======
-	move() {
-		// this.x += this.dirx * this.vx;
-		// this.y += this.diry * this.vy;
-		// this.vx--;
-		// if (this.vy > 0 ) this.vy-=5;
-	}
-}
->>>>>>> 49de9737a313564a3fd08ee98ba3959a9192bdc2
