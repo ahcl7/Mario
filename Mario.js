@@ -13,12 +13,16 @@ class Mario extends Dynamic {
 
 	standToDynamicObject() {
 		for(var i=first;i<last;i++) {
-			if (list_obj[i] instanceof grump || list_obj[i] instanceof Koopa)
+			// if (Math.abs(this.y - list_obj[i].y - 50) <=14	) 
 			{
 				if (touch_up(this.x,this.y,list_obj[i].x-trai,list_obj[i].y) 
 					&& !(Math.abs(this.x - list_obj[i].x + trai)==50 && this.y == list_obj[i].y))
 				{
-					return true;	
+					if (list_obj[i] instanceof grump) {
+						return true;
+					} else if (list_obj[i] instanceof Koopa) {
+						return true;
+					}
 				}
 			}
 		}
@@ -69,8 +73,12 @@ class Mario extends Dynamic {
 		this_ob.style.bottom = this.y + "px";
 		this_ob.style.left = this.x + "px";
 	}
-	
-	stand() {
+	show1() {
+		var this_ob = document.getElementById("id" + this.id);
+		this_ob.style.bottom = this.y + "px";
+		this_ob.style.left = this.x + "px";
+	}
+	stand() {	
 		for(var i=first;i<last;i++) {
 			// if (Math.abs(this.y - list_obj[i].y - 50) <=14	) 
 			{

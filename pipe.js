@@ -1,5 +1,6 @@
 class pipe extends Static {
-	constructor(x,y,id) {
+	constructor(type,x,y,id) {
 		super(x,y,id);
+		this.type = type;
 	}
 }

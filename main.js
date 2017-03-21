@@ -34,7 +34,7 @@ function add(i) {
 	new_ob.style.height = '50px';
 	new_ob.style.left = list_obj[i].x + "px";
 	new_ob.style.bottom  = list_obj[i].y + "px";
-	new_ob.style.zIndex = "10";
+	new_ob.style.zIndex = 10;
 	if (list_obj[i] instanceof gach) {
 		// alert(i);
 		new_ob.src = "brick.png";
@@ -44,10 +44,10 @@ function add(i) {
 		new_ob.src = "images/koopa_0.png";
 	} else if (list_obj[i] instanceof plant) {
 		new_ob.src = "images/plant_0.png";
-		new_ob.style.zIndex = "5";
+		new_ob.style.zIndex = 5;
 	} else if (list_obj[i] instanceof pipe) {
-		new_ob.src = "images/pipe1.png";
-		new_ob.style.height = '100px';	
+		if (list_obj[i].type == 1) new_ob.src = "images/pipe4.png";
+		else new_ob.src = "images/pipe3.png";
 	}
 	document.getElementById('game').appendChild(new_ob);	 
 }
@@ -78,7 +78,10 @@ function process() {
 						break;
 						}
 					case '2': {
-						new_ob = new pipe(x,y-50,cnt);
+						new_ob1 = new pipe(1,x,y,cnt);
+						list_obj.push(new_ob1);
+						cnt++;
+						new_ob = new pipe(0,x,y-50,cnt);
 						break;
 					}
 					case '3': {
@@ -110,6 +113,7 @@ function process() {
 		new_ob.style.left = MARIO.x + "px";
 		new_ob.style.bottom  = MARIO.y + "px";
 		new_ob.src = "mario1_squat.png";
+		new_ob.style.zIndex = 20;
 		document.getElementById('game').appendChild(new_ob);	
 }
 	
@@ -152,7 +156,7 @@ function playSound(id) {
 	x.play();
 }
 function Move_on_keyboard() {
-	playSound("bgSound");
+	// playSound("bgSound");
 	if (mark[0]) MARIO.move_left();
 	if (mark[1] && MARIO.stand()) {
 		MARIO.move_up(14);
@@ -190,6 +194,10 @@ function move_left_all() {
 	
 }
 async function play() {
+	document.getElementById("bgSound").volume = 0.1;
+	document.getElementById("bgSound").autoplay = true;
+	document.getElementById("bgSound").play();
+	document.getElementById("bgSound").loop = true;
 	while (!MARIO.dead()) {
 		move_all();
 		if (MARIO.x > 800) {
@@ -197,6 +205,16 @@ async function play() {
 			move_left_all();
 		} 
 		await sleep(17);
+	}
+	document.getElementById("bgSound").volume = 0;
+	playSound("dead");
+	var x = 100;
+	document.getElementById("id" + MARIO.id).src = "images/mario_death.png";
+	MARIO.vy = 16;
+	while (x--) {
+		MARIO.roi();
+		MARIO.show1();
+		await sleep(20);
 	}
 }
 function readBlob() {
