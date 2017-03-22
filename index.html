@@ -14,20 +14,26 @@
 	<link rel="stylesheet" type="text/css" href="mario.css">
 	<script type="text/javascript" src = parent.js></script>
 	<script type="text/javascript" src = Static.js></script>
+	<script type="text/javascript" src = Coin.js></script>
 	<script type="text/javascript" src = gach.js></script>
 	<script type="text/javascript" src = Dynamic.js></script>
 	<script type="text/javascript" src = Mario.js></script>
 	<script type="text/javascript" src = grump.js>	</script>
 	<script type="text/javascript" src = Koopa.js></script>	
 	<script type="text/javascript" src = plant.js></script>
+	<script type="text/javascript" src = princess.js></script>
 	<script type="text/javascript" src = pipe.js></script>
 	<script type="text/javascript" src = main.js></script>
+
 
 </head>
 <body>
 	<audio id = "jump"> <source src="sounds/jumpbig.wav" type="audio/mpeg"> </audio>
 	<audio id = "bgSound"> <source src="sounds/underwater-fast.wav" type="audio/mpeg"> </audio>
 	<audio id = "dead"> <source src="sounds/death.wav" type="audio/mpeg"> </audio>
+	<audio id = "coin"> <source src="sounds/coin.wav" type="audio/mpeg"> </audio>
+	<audio id = "win"> <source src="sounds/castleend.wav" type="audio/mpeg"> </audio>
+
 
 	<div id = "game" style = "position: relative; background-color: black;margin-left: 0px;"> </div>
 	<input type="file" id="files" name="file" onchange="loadmap()"/>

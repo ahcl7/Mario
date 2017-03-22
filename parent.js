@@ -1,4 +1,3 @@
-'use strict';
 class parent {
 	constructor (x,y,id) {
 		this.x = x;

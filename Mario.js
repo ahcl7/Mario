@@ -34,6 +34,18 @@ class Mario extends Dynamic {
 
 		for(var i=first;i<last;i++) {
 			// if (Math.abs(this.y - list_obj[i].y - 50) <=14	) 
+			if (list_obj[i] instanceof princess) {
+				if (touch1(this,list_obj[i])) {
+					if (list_obj[i].t == 0) {
+						return true;
+					}
+					else {
+						win = true;
+					}
+				}
+
+			}
+			else
 			if (list_obj[i] instanceof grump || list_obj[i] instanceof plant) {
 				// if (this.touch_left(list_obj[i]) || this.touch_right(list_obj[i])) {
 				// 	return true;
@@ -109,9 +121,17 @@ class Mario extends Dynamic {
 	touch_head() {		
 		for(var i = first ; i < last ; i++) {
 			if (touch_up(list_obj[i].x-trai,list_obj[i].y,this.x,this.y)) {
-				this.vy = 0;
-				this.y = list_obj[i].y - 50;
-				return true;
+				if (list_obj[i] instanceof Coin) {
+					list_obj[i].disappear();
+					list_obj.splice(i,1);
+					last--;
+					document.getElementById("coin").play();
+
+				} else {
+					this.vy = 0;
+					this.y = list_obj[i].y - 50;
+					return true;
+				}
 			}
 		}
 		return false;
@@ -158,6 +178,16 @@ class Mario extends Dynamic {
 		if (this.touch_head() || !this.stand()) {
 			this.roi();
 		} 	
+		for(var i = first; i<last; i++) {
+			if (list_obj[i] instanceof Coin) {
+				if (touch1(this,list_obj[i])) {
+					list_obj[i]	.disappear();
+					list_obj.splice(i,1);
+					last--;
+					document.getElementById("coin").play();
+				}
+			}
+		}
 
 	}
 	

@@ -1,6 +1,7 @@
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
+var win = false;
 var ans = "nothing!";
 var MARIO;
 var first,last;
@@ -48,6 +49,10 @@ function add(i) {
 	} else if (list_obj[i] instanceof pipe) {
 		if (list_obj[i].type == 1) new_ob.src = "images/pipe4.png";
 		else new_ob.src = "images/pipe3.png";
+	} else if (list_obj[i] instanceof Coin) {
+		new_ob.src = "images/coin_use0.png";
+	} else if (list_obj[i] instanceof princess) {
+		new_ob.src = "images/peach.png";
 	}
 	document.getElementById('game').appendChild(new_ob);	 
 }
@@ -65,6 +70,15 @@ function process() {
 				var y = convert(i * 50);
 				
 				switch (map[i][j]) {
+					case 'D': {
+						var t = Math.random() *2;
+						new_ob = new princess(parseInt(t, 10),x,y,cnt);
+						break;
+					}
+					case 'C': {
+						new_ob = new Coin(x,y,cnt);
+						break;
+					}
 					case 'X': {
 						MARIO = new Mario(x,y,1,0,0,0,cnt);
 						break;
@@ -194,11 +208,11 @@ function move_left_all() {
 	
 }
 async function play() {
-	document.getElementById("bgSound").volume = 0.1;
+	document.getElementById("bgSound").volume = 0.5;
 	document.getElementById("bgSound").autoplay = true;
 	document.getElementById("bgSound").play();
 	document.getElementById("bgSound").loop = true;
-	while (!MARIO.dead()) {
+	while (!MARIO.dead() && !win) {
 		move_all();
 		if (MARIO.x > 800) {
 			MARIO.x = 800;
@@ -206,15 +220,20 @@ async function play() {
 		} 
 		await sleep(17);
 	}
-	document.getElementById("bgSound").volume = 0;
-	playSound("dead");
-	var x = 100;
-	document.getElementById("id" + MARIO.id).src = "images/mario_death.png";
-	MARIO.vy = 16;
-	while (x--) {
-		MARIO.roi();
-		MARIO.show1();
-		await sleep(20);
+	if (win) {
+		document.getElementById("win").play();
+	}
+	else {
+		document.getElementById("bgSound").volume = 0;
+		playSound("dead");
+		var x = 100;
+		document.getElementById("id" + MARIO.id).src = "images/mario_death.png";
+		MARIO.vy = 16;
+		while (x--) {
+			MARIO.roi();
+			MARIO.show1();
+			await sleep(20);
+		}
 	}
 }
 function readBlob() {
