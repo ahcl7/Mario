@@ -154,7 +154,7 @@ function touch_proc() {
 			for(var j=first;j<last;j++) {
 				if (i!=j) {
 					if (list_obj[i].dirx == -1) fall |= inside(list_obj[j].x,list_obj[j].y,list_obj[i].x,list_obj[i].y-0.01);
-					else 	fall |= inside(list_obj[j].x,list_obj[j].y,list_obj[i].x+49.9999,list_obj[i].y-0.01);
+						else 	fall |= inside(list_obj[j].x,list_obj[j].y,list_obj[i].x+49.9999,list_obj[i].y-0.01);
 					if (fall) break;		
 				}
 			}
@@ -214,8 +214,8 @@ async function play() {
 	document.getElementById("bgSound").loop = true;
 	while (!MARIO.dead() && !win) {
 		move_all();
-		if (MARIO.x > 800) {
-			MARIO.x = 800;
+		if (MARIO.x > 500) {
+			MARIO.x = 500;
 			move_left_all();
 		} 
 		await sleep(17);

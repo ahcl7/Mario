@@ -41,6 +41,7 @@ class Mario extends Dynamic {
 					}
 					else {
 						win = true;
+						
 					}
 				}
 
@@ -213,7 +214,7 @@ class Mario extends Dynamic {
 		this.diry %= 36;
 		this.vx = 2;
 		this.x += this.vx;
-		this.x = Math.min(this.x, 801);
+		this.x = Math.min(this.x, 501);
 		this.test();
 		this.show();
 	}
